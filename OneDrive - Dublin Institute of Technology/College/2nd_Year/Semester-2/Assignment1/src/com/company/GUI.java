@@ -1,14 +1,6 @@
 //This is the package the entire assignment will be using.
 
 package com.company;
-
-//These are the import statements to make the java swing GUI work
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 /**
 
  Author: Dan Hederman
@@ -20,15 +12,29 @@ import java.awt.event.ActionListener;
  Assignment: Abusive context detector.
 
  */
-public class GUI extends JFrame implements ActionListener{
+
+//These are the import statements to make the java swing GUI work
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.util.Scanner;
+
+import static java.awt.SystemColor.text;
+
+public class GUI extends JFrame implements ActionListener {
 
     /**
      * @param args
      */
     JButton button1, button2;
-    JTextField text1;
-    JLabel label1;
-    JCheckBox checkBox1;
+    JTextField text;
+    FileWriter fWriter = null;
+    BufferedWriter writer = null;
 
     // constructor
 
@@ -37,42 +43,58 @@ public class GUI extends JFrame implements ActionListener{
         super(title);
         setSize(500, 300);
         setLayout(new FlowLayout());
-        Color  blue   = new Color(0, 0, 255);
+        Color blue = new Color(0, 0, 255);
 
-        button1 = new JButton("Roles");
+        button1 = new JButton("Add abuse text file");
 
         button1.addActionListener(this);
         add(button1);
 
-        button1.setBackground(Color.blue);
-        getContentPane().setBackground(Color.green);
-
         //Placeholder for the text field to allow users to add to the abusive words file
 
-        text1 = new JTextField("Placeholder");
-        add(text1);
-        //PromptSupport.setPrompt("Bunnies", bunnies);
+        text = new JTextField("Placeholder");
+        add(text);
+
+        button2 = new JButton("Check for abusive language");
+        add(button2);
 
         //Makes the GUI visible to the user
 
         setVisible(true);
-
     }
 
-    public void actionPerformed(ActionEvent e)
-    {
-        if(e.getSource() == button1)
+    //Action performed to control what happens when a button is pressed.
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == button1) {
+
+            JTextField textField = text; //
+            String text = textField.getText();
+
+
+            try {
+                fWriter = new FileWriter("abuse.txt");
+                writer = new BufferedWriter(fWriter);
+                writer.write(String.valueOf(text));
+                writer.newLine();
+                writer.close();
+                System.err.println("Your input of " + text.length() + " characters was saved.");
+            } catch (Exception c) {
+                System.out.println("Error!");
+            }
+
+        }
+
+        if (e.getSource() == button2) ;
+
         {
-            //JOptionPane.showMessageDialog(this, "MyFirst event!");
-            FileManager file = new FileManager("roles.txt");
+            JOptionPane.showMessageDialog(this, "Abuse.txt");
+            FileManager file = new FileManager("abuse.txt");
             file.connectToFile();
             System.out.println("\n");
-            for(int i = 0; i <3;i++){
+            for (int i = 0; i < 1; i++) {
                 System.out.print(file.readFile()[i]);
             }
         }
-
-
     }
 }
-
