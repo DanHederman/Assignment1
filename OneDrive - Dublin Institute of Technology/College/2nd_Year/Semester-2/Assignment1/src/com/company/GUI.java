@@ -20,12 +20,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.util.Scanner;
-
-import static java.awt.SystemColor.text;
-
 public class GUI extends JFrame implements ActionListener {
 
     /**
@@ -73,7 +68,7 @@ public class GUI extends JFrame implements ActionListener {
 
 
             try {
-                fWriter = new FileWriter("abuse.txt");
+                fWriter = new FileWriter("abuse.txt", true);
                 writer = new BufferedWriter(fWriter);
                 writer.write(String.valueOf(text));
                 writer.newLine();
@@ -85,7 +80,7 @@ public class GUI extends JFrame implements ActionListener {
 
         }
 
-        if (e.getSource() == button2) ;
+        if (e.getSource() == button2)
 
         {
             JOptionPane.showMessageDialog(this, "Abuse.txt");

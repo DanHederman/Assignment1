@@ -7,8 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        GUI B1 = new GUI("Dan");
-        //jgjgjgj
+        GUI B1 = new GUI("Abusive Language");
 
     }
 
