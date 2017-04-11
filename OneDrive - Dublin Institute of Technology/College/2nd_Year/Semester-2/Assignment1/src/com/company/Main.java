@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         JFrame abuse = new JFrame("Abusive Text Detector");
-        abuse.setContentPane(new AbusiveLanguageDetector().panelMain);
+        abuse.setContentPane(new GUI().panelMain);
         abuse.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         abuse.pack();
         abuse.setVisible(true);
