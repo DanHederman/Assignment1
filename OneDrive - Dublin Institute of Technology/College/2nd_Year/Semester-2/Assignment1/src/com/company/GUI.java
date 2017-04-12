@@ -92,9 +92,10 @@ public class GUI {
                 while (scan2.hasNextLine())
                 {
                     str2 = scan2.nextLine();
+                    System.out.println(str2);
                     for(String str: dictionary)
                     {
-                        if(str.equals(str2))
+                        if(str2.contains(str))
                         {
                             hits.put(str, hits.get(str) + 1);
                         }
