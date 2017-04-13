@@ -39,7 +39,11 @@ public class GUI {
     Scanner scan2 = null;
     String str = null;
     String str2 = null;
-
+    int count =0;
+    String nextToken = null;
+    Scanner scancheck = null;
+    String strcheck = null;
+    Scanner scan3 = null;
 
     public GUI() {
 
@@ -56,15 +60,53 @@ public class GUI {
 
                 //Try catch to append the new abusive word to the end of the abusive words file
 
+                BufferedReader Confirm  = null;
+
+                //Try catch to read the abuse text file into the variable abuse
+
+                File filecheck = new File("C:\\Users\\danhe\\OneDrive - Dublin Institute of Technology\\College\\2nd_Year\\Semester-2\\Assignment1\\abuse.txt");
+
                 try {
-                    fWriter = new FileWriter("abuse.txt", true);
-                    writer = new BufferedWriter(fWriter);
-                    writer.write(String.valueOf(text));
-                    writer.newLine();
-                    writer.close();
-                    System.err.println("Your input of " + text.length() + " characters was saved.");
-                } catch (Exception c) {
-                    System.out.println("Error!");
+                    scancheck = new Scanner(filecheck);
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                ArrayList<String> checkdict = new ArrayList<>();
+
+                while(scancheck.hasNextLine())
+                {
+                    str = scancheck.nextLine();
+                    checkdict.add(str);
+                }
+
+                for (String str : checkdict) {
+                    if (text.contains(str)) {
+                        count++;
+                    }
+                }
+
+                System.out.println(count);
+                //Try catch to read the abuse text file into the variable abuse
+
+                if(count == 0) {
+
+                    try {
+                        fWriter = new FileWriter("abuse.txt", true);
+                        writer = new BufferedWriter(fWriter);
+                        writer.write(String.valueOf(text));
+                        writer.newLine();
+                        writer.close();
+                        System.err.println("Your input of " + text.length() + " characters was saved.");
+                    } catch (Exception c) {
+                        System.out.println("Error!");
+                    }
+
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Word already added");
+                    count=0;
                 }
             }
         });
