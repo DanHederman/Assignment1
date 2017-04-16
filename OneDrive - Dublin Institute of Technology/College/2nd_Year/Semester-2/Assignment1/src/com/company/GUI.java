@@ -40,10 +40,8 @@ public class GUI {
     String str = null;
     String str2 = null;
     int count =0;
-    String nextToken = null;
     Scanner scancheck = null;
-    String strcheck = null;
-    Scanner scan3 = null;
+    String upstr2 =null;
 
     public GUI() {
 
@@ -118,6 +116,7 @@ public class GUI {
             public void actionPerformed(ActionEvent e) {
 
                 int shout = 0;
+                int swear = 0;
 
                 //Reads in the users file of choice to be checked for abusive words
 
@@ -178,9 +177,9 @@ public class GUI {
 
                         for (String str : abusivedictionary) {
 
-                            str = str.toUpperCase();
+                            upstr2 = s2.toUpperCase();
                             System.out.println(str);
-                            if(str.equals(s2))
+                            if(upstr2.equals(s2))
                             {
                                 shout++;
                             }
@@ -188,7 +187,7 @@ public class GUI {
                             str = str.toLowerCase();
                             s2 = s2.toLowerCase();
                             if (s2.contains(str)) {
-                                hits.put(str, hits.get(str) + 1);
+                                swear++;
                             }
                         }
                     }
@@ -196,11 +195,9 @@ public class GUI {
 
                 //For loop to print out a message box to the user the number of each abusive word in the text file
 
-                for(String str: abusivedictionary)
-                {
-                    String output = (str + " appeared " + hits.get(str) + " times");
+                    String output = (swear + " Swear words appeared");
                     JOptionPane.showMessageDialog(null, output);
-                }
+
 
                 String caps = (shout + " Words shouted ");
                 JOptionPane.showMessageDialog(null, caps);
