@@ -117,6 +117,8 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                int shout = 0;
+
                 //Reads in the users file of choice to be checked for abusive words
 
                 JTextField textField = textField2;
@@ -175,6 +177,16 @@ public class GUI {
                         //Nested if loop inside a for loop to count the number of each abusive word in the file
 
                         for (String str : abusivedictionary) {
+
+                            str = str.toUpperCase();
+                            System.out.println(str);
+                            if(str.equals(s2))
+                            {
+                                shout++;
+                            }
+
+                            str = str.toLowerCase();
+                            s2 = s2.toLowerCase();
                             if (s2.contains(str)) {
                                 hits.put(str, hits.get(str) + 1);
                             }
@@ -189,6 +201,9 @@ public class GUI {
                     String output = (str + " appeared " + hits.get(str) + " times");
                     JOptionPane.showMessageDialog(null, output);
                 }
+
+                String caps = (shout + " Words shouted ");
+                JOptionPane.showMessageDialog(null, caps);
             }
         });
 
