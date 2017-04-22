@@ -10,20 +10,14 @@ import java.util.Scanner;
 
 /**
  Author: Dan Hederman
-
  Start Date: 20/3/2017
-
  Interpreter: Intellij
-
  For my second year semester 2 Java Assignment in object orientated programmingI choose to
  code an abusive content detecting program. The idea here is to have a text file full of
  abusive words. The user will input the name of a file that will be checked against the
  file full of abusive words. The user will be able to enter new abusive words into the
  text file full of abusive words.
-
  intellij has a built in gui form creator which I will use as well as
-
-
  */
 public class GUI {
     private JButton button1;
@@ -117,6 +111,9 @@ public class GUI {
 
                 int shout = 0;
                 int swear = 0;
+                int totalwords = 0;
+                int totalabuse = 0;
+                float percentage = 0;
 
                 //Reads in the users file of choice to be checked for abusive words
 
@@ -173,12 +170,13 @@ public class GUI {
 
                     for (String s2: str2.split(" ")) {
 
+                        totalwords++;
+
                         //Nested if loop inside a for loop to count the number of each abusive word in the file
 
                         for (String str : abusivedictionary) {
 
                             upstr2 = s2.toUpperCase();
-                            System.out.println(str);
                             if(upstr2.equals(s2))
                             {
                                 shout++;
@@ -186,7 +184,7 @@ public class GUI {
 
                             str = str.toLowerCase();
                             s2 = s2.toLowerCase();
-                            if (s2.contains(str)) {
+                            if (s2.equals(str)) {
                                 swear++;
                             }
                         }
@@ -195,12 +193,22 @@ public class GUI {
 
                 //For loop to print out a message box to the user the number of each abusive word in the text file
 
-                    String output = (swear + " Swear words appeared");
-                    JOptionPane.showMessageDialog(null, output);
+                String output = (swear + " Swear words appeared");
+                JOptionPane.showMessageDialog(null, output);
 
 
                 String caps = (shout + " Words shouted ");
                 JOptionPane.showMessageDialog(null, caps);
+
+                totalabuse = swear + shout;
+
+                String totwords = ("Total abusive words(including shouting): " + totalabuse);
+                JOptionPane.showMessageDialog(null, totwords);
+
+                percentage = 100/totalwords*totalabuse;
+
+                String end = ("Total percentage of abuse: " + percentage);
+                JOptionPane.showMessageDialog(null, end);
             }
         });
 
