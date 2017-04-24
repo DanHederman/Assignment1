@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -20,6 +19,9 @@ import java.util.Scanner;
  intellij has a built in gui form creator which I will use as well as
  */
 public class GUI {
+
+    //Param args for the GUI
+
     private JButton button1;
     private JButton button2;
     private JButton button3;
@@ -27,15 +29,28 @@ public class GUI {
     private JTextField textField2;
     private JTextArea textArea1;
     public JPanel panelMain;
-    FileWriter fWriter = null;
-    BufferedWriter writer = null;
-    Scanner scan = null;
-    Scanner scan2 = null;
-    String str = null;
-    String str2 = null;
+
+    //Scanner/filewriter
+
+    private FileWriter fWriter = null;
+    private BufferedWriter writer = null;
+    private Scanner scan = null;
+    private Scanner scan2 = null;
+    private String str = null;
+    private String str2 = null;
     int count =0;
-    Scanner scancheck = null;
-    String upstr2 =null;
+    private Scanner scancheck = null;
+    private String upstr2 =null;
+
+    //Counters initalised to zero
+
+    int shout = 0;
+    int swear = 0;
+    int totalwords = 0;
+    int totalabuse = 0;
+    float percentage = 0;
+
+    //Constructor
 
     public GUI() {
 
@@ -50,12 +65,6 @@ public class GUI {
                 JTextField textField = textField1; //
                 String text = textField.getText();
 
-                //Try catch to append the new abusive word to the end of the abusive words file
-
-                BufferedReader Confirm  = null;
-
-                //Try catch to read the abuse text file into the variable abuse
-
                 File filecheck = new File("C:\\Users\\danhe\\OneDrive - Dublin Institute of Technology\\College\\2nd_Year\\Semester-2\\Assignment1\\abuse.txt");
 
                 try {
@@ -63,6 +72,8 @@ public class GUI {
                 } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
                 }
+
+                //Initialisation of the arraylist checkdict
 
                 ArrayList<String> checkdict = new ArrayList<>();
 
@@ -72,29 +83,37 @@ public class GUI {
                     checkdict.add(str);
                 }
 
-                for (String str : checkdict) {
+                for (String str: checkdict) {
                     if (text.contains(str)) {
                         count++;
                     }
                 }
 
-                System.out.println(count);
                 //Try catch to read the abuse text file into the variable abuse
 
                 if(count == 0) {
 
                     try {
+
+                        //Reads in the file of abusive words and appends the new
+                        //word the user wishes to add to the end of the file
+
                         fWriter = new FileWriter("abuse.txt", true);
                         writer = new BufferedWriter(fWriter);
                         writer.write(String.valueOf(text));
                         writer.newLine();
                         writer.close();
-                        System.err.println("Your input of " + text.length() + " characters was saved.");
+                        String saved = ("Your input of " + text.length() + " characters was saved.");
+                        JOptionPane.showMessageDialog(null, saved);
                     } catch (Exception c) {
                         System.out.println("Error!");
                     }
 
                 }
+
+                //This else statement tells the user when the word they are
+                //trying to add is already in the file.
+
                 else
                 {
                     JOptionPane.showMessageDialog(null,"Word already added");
@@ -109,11 +128,11 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int shout = 0;
-                int swear = 0;
-                int totalwords = 0;
-                int totalabuse = 0;
-                float percentage = 0;
+                shout = 0;
+                swear = 0;
+                totalwords = 0;
+                totalabuse = 0;
+                percentage = 0;
 
                 //Reads in the users file of choice to be checked for abusive words
 
@@ -147,9 +166,6 @@ public class GUI {
 
                 ArrayList<String> abusivedictionary = new ArrayList<>();
 
-                //The hashmap will have the number of times each abusive word is in the file to be checked
-
-                HashMap<String,Integer> hits = new HashMap<String, Integer>();
 
                 //While loop to read the the abusive text file into the array abusivedictionary
 
@@ -157,7 +173,6 @@ public class GUI {
                 {
                     str = scan.nextLine();
                     abusivedictionary.add(str);
-                    hits.put(str, 0);
                 }
 
                 //While loop to scan the file to be checked for abusive words
@@ -170,17 +185,24 @@ public class GUI {
 
                     for (String s2: str2.split(" ")) {
 
+                        //Increment total words counter
+
                         totalwords++;
 
                         //Nested if loop inside a for loop to count the number of each abusive word in the file
 
                         for (String str : abusivedictionary) {
 
+                            //set variable upstr2 to all caps and compare
+                            //to search for shouting
+
                             upstr2 = s2.toUpperCase();
                             if(upstr2.equals(s2))
                             {
                                 shout++;
                             }
+
+                            //Set str and 2s2 to lowercase to check for swear words
 
                             str = str.toLowerCase();
                             s2 = s2.toLowerCase();
@@ -191,7 +213,7 @@ public class GUI {
                     }
                 }
 
-                //For loop to print out a message box to the user the number of each abusive word in the text file
+                //Message dialogue boxes to give the user feedback
 
                 String output = (swear + " Swear words appeared");
                 JOptionPane.showMessageDialog(null, output);
